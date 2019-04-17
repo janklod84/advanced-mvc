@@ -32,24 +32,24 @@ class View
 		 protected $layout = DEFAULT_LAYOUT;
 
          
-         /**
-          * Constructor
-          * @return void
-         */
+     /**
+      * Constructor
+      * @return void
+     */
 		 public function __construct()
 		 {
 
 		 }
 
          
-         /**
-          * View render
-          * @param string $viewName 
-          * @return mixed
-         */
+     /**
+      * View render
+      * @param string $viewName 
+      * @return mixed
+     */
 		 public function render($viewName)
 		 {
-		 	 $viewArray = explode('/', $viewName);
+		 	       $viewArray = explode('/', $viewName);
              $viewString = implode(DS, $viewArray);
 
              $viewPath = ROOT . DS . 'app' . DS . 'views' . DS . $viewString . '.php';
@@ -57,25 +57,25 @@ class View
 
              if(file_exists($viewPath))
              {
-             	include($viewPath);
-             	
-             	if(file_exists($layoutPath))
-             	{
-             		 include($layoutPath);
-             	}
+                 	include($viewPath);
+                 	
+                 	if(file_exists($layoutPath))
+                 	{
+                 		 include($layoutPath);
+                 	}
 
              }else{
 
-             	 die('The view \"' . $viewName . '" does not exist.');
+             	    die('The view \"' . $viewName . '" does not exist.');
              }
 		 }
 
          
-         /**
-          * Create content
-          * @param string $type 
-          * @return 
-         */
+     /**
+      * Create content
+      * @param string $type 
+      * @return 
+     */
 		 public function content($type)
 		 {
              if($type == 'head')
@@ -91,67 +91,67 @@ class View
 		 }
 
          
-         /**
-          * start type
-          * @param string $type 
-          * @return void
-         */
+     /**
+      * start type
+      * @param string $type 
+      * @return void
+     */
 		 public function start($type)
 		 {
-             $this->outputBuffer = $type;
-             ob_start();
+         $this->outputBuffer = $type;
+         ob_start();
 		 }
          
 
-         /**
-          * end started part
-          * @return void
-         */
+     /**
+      * end started part
+      * @return void
+     */
 		 public function end()
 		 {
-		 	 if($this->outputBuffer == 'head')
-		 	 {
-		 	 	  $this->head = ob_get_clean();
+    		 	 if($this->outputBuffer == 'head')
+    		 	 {
+    		 	 	  $this->head = ob_get_clean();
 
-		 	 }elseif($this->outputBuffer == 'body'){
+    		 	 }elseif($this->outputBuffer == 'body'){
 
-		 	 	  $this->body = ob_get_clean();
+    		 	 	  $this->body = ob_get_clean();
 
-		 	 }else{
+    		 	 }else{
 
-		 	 	 die('You must first run the start method.');
-		 	 }
+    		 	 	   die('You must first run the start method.');
+    		 	 }
 		 }
 
 
-         /**
-          * Render site title
-          * @return string
-         */
-         public function siteTitle()
-         {
-             return $this->siteTitle;
-         }
+     /**
+      * Render site title
+      * @return string
+     */
+     public function siteTitle()
+     {
+         return $this->siteTitle;
+     }
 
 
-         /**
-          * set site title
-          * @param string $title 
-          * @return void
-         */
+     /**
+      * set site title
+      * @param string $title 
+      * @return void
+     */
 		 public function setSiteTitle($title)
 		 {
-		 	  $this->siteTitle = $title;
+		 	    $this->siteTitle = $title;
 		 }
 
 
 		 /**
-          * set layout
-          * @param string $path 
-          * @return void
-         */
+        * set layout
+        * @param string $path 
+        * @return void
+     */
 		 public function setLayout($path)
 		 {
-		 	 $this->layout = $path;
+		 	     $this->layout = $path;
 		 }
 }

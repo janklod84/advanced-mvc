@@ -20,9 +20,8 @@ class Home extends Controller
        * Render view index
        * @return mixed
       */
-	  public function indexAction($name)
+	  public function indexAction()
 	  {
-	  	  echo $name;
           $this->view->render('home/index');
 	  }
 }
