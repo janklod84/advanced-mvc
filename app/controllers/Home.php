@@ -21,8 +21,14 @@ class Home extends Controller
        * index action
        * @return mixed
       */
-	  public function indexAction()
-	  {
-          $this->view->render('home/index');
-	  }
+  	  public function indexAction()
+  	  {
+            $db = DB::getInstance();
+            $sql = "SELECT * FROM contacts";
+            $contactsQ = $db->query($sql);
+            
+            // pre($contactsQ);
+            
+            $this->view->render('home/index');
+  	  }
 }

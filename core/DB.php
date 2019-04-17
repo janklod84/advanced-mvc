@@ -33,7 +33,7 @@ class DB
 
 
 	   /**
-        * @var array
+        * @var mixed
        */
 	   private $result;
 
@@ -92,4 +92,57 @@ class DB
 
             return self::$instance;
 	   }
-}
+
+
+       
+       /**
+        * Excecution query
+        * [$this->query return \PDOStatement]
+        * 
+        * @param string $sql 
+        * @param array $params 
+        * @return 
+        */
+	   public function query($sql, $params = [])
+	   {
+             $this->error = false;
+             
+             // if query executed successfully
+             if($this->query = $this->pdo->prepare($sql))
+             {
+             	  $x = 1;
+
+             	  // if have params
+             	  if(count($params))
+             	  {
+             	  	  foreach($params as $param)
+             	  	  {   
+             	  	  	   // bindValue(1, 'param 1'); bindValue(2, 'param 2')
+             	  	  	   $this->query->bindValue($x, $param);
+             	  	  	   $x++;
+             	  	  }
+             	  }
+
+                  // if executed successfully
+             	  if($this->query->execute())
+             	  {
+             	  	   $this->result  = $this->query->fetchAll(PDO::FETCH_OBJ);
+             	  	   $this->count   = $this->query->rowCount();
+             	  	   $this->lastInsertID = $this->pdo->lastInsertId();
+
+             	  }else{
+
+             	  	  $this->error = true;
+             	  }
+             }
+
+             return $this;
+
+	   }// end query method
+
+
+
+
+
+
+}// end class DB
