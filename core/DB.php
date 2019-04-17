@@ -101,7 +101,7 @@ class DB
         * 
         * @param string $sql 
         * @param array $params 
-        * @return 
+        * @return self
         */
 	   public function query($sql, $params = [])
 	   {
@@ -141,7 +141,53 @@ class DB
 	   }// end query method
 
 
+       
+       /**
+        * 
+        * @param string $table 
+        * @param array $fields 
+        * @return mixed
+       */
+       public function insert($table, $fields = [])
+       {
+             $fieldString = '';
+             $valueString = '';
+             $values = [];
 
+             foreach ($fields as $field => $value)
+             {
+                  $fieldString .= '`' . $field . '`,';
+                  $valueString .= '?,';
+                  $values[] = $value;
+             }
+
+             $fieldString = rtrim($fieldString, ',');
+             $valueString = rtrim($valueString, ',');
+              
+             $sql = sprintf('INSERT INTO `%s` (%s) VALUES (%s)', 
+             	             $table, 
+             	             $fieldString, 
+             	             $valueString
+             	          );
+             
+             // if not errors
+             if(!$this->query($sql, $values)->error())
+             {
+                  return true;
+             }
+
+             return false;
+       }
+
+       
+       /**
+        * return error status
+        * @return bool
+       */
+       public function error()
+       {
+       	   return $this->error;
+       }
 
 
 

@@ -24,10 +24,14 @@ class Home extends Controller
   	  public function indexAction()
   	  {
             $db = DB::getInstance();
-            $sql = "SELECT * FROM contacts";
-            $contactsQ = $db->query($sql);
-            
-            // pre($contactsQ);
+            $fields = [
+               'fname' => 'Brown',
+               'lname' => 'Yao',
+               'email' => 'test@blog.com'
+            ];
+
+            $db->insert('contacts', $fields);
+          
             
             $this->view->render('home/index');
   	  }
