@@ -24,15 +24,8 @@ class Home extends Controller
   	  public function indexAction()
   	  {
             $db = DB::getInstance();
-            $fields = [
-               'fname' => 'Brown',
-               'lname' => 'Yao',
-               'email' => 'test@blog.com'
-            ];
-
-            $db->insert('contacts', $fields);
+            $db->delete('contacts', 3);
           
-            
             $this->view->render('home/index');
   	  }
 }

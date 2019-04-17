@@ -143,10 +143,10 @@ class DB
 
        
        /**
-        * 
+        * Insert data into table
         * @param string $table 
         * @param array $fields 
-        * @return mixed
+        * @return bool
        */
        public function insert($table, $fields = [])
        {
@@ -178,8 +178,63 @@ class DB
 
              return false;
        }
+       
+       
+       /**
+        * Update data from table
+        * @param string $table 
+        * @param int $id 
+        * @param array $fields 
+        * @return bool
+        */
+       public function update($table, $id, $fields = [])
+       { 
+           $fieldString = '';
+           $values = [];
+
+           foreach ($fields as $field => $value)
+           {
+                 $fieldString .= ' ' . $field . ' = ?,';
+                 $values[] = $value;
+           }
+           
+           $fieldString = trim($fieldString); // remove white spaces
+           $fieldString = rtrim($fieldString, ',');
+           $sql = sprintf('UPDATE `%s` SET %s WHERE id = ?', $table, $fieldString);
+           $values[] = $id;
+           
+           // if not errors
+           if(!$this->query($sql, $values)->error())
+           {
+           	   return true;
+           }
+
+           return false;
+       }
+
 
        
+       /**
+        * Delete data into table
+        * @param string $table 
+        * @param int $id 
+        * @return bool
+       */
+       public function delete($table, $id)
+       {
+          $sql = sprintf('DELETE FROM %s WHERE id = ?', $table, $id);
+          $values[] = $id;
+
+          if(!$this->query($sql, $values)->error())
+          {
+          	  return true;
+          }
+
+          return false;
+       }
+       
+
+
        /**
         * return error status
         * @return bool
