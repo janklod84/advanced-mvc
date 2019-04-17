@@ -9,6 +9,22 @@
 
 /*
  | -------------------------------------------------------------------
+ |         DATABASE CONFIG
+ |         DB_NAME      : database name
+ |         DB_USER      : database user
+ |         DB_PASSWORD  : database password
+ |         DB_HOST      : database host *** use IP address to avoid DSN lookup
+ | -------------------------------------------------------------------
+*/
+
+define('DB_NAME', 'jk_basic_mvc');
+define('DB_USER', 'root');
+define('DB_PASSWORD', '');
+define('DB_HOST', '127.0.0.1');
+
+
+/*
+ | -------------------------------------------------------------------
  |         DEFAULT CONTROLLER IF THERE ISN'T ONE DEFINED IN THE URL
  | -------------------------------------------------------------------
 */
