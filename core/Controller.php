@@ -19,7 +19,7 @@ class Controller extends Application
         /**
          * @var string
         */
-        public $view;
+        public $view; // do may protected
 
         
         /**

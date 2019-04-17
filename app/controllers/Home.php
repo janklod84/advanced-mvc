@@ -1,6 +1,7 @@
 <?php 
 
 
+// http://mvc.loc/home/[index, first, second, third]
 class Home extends Controller 
 {
 
@@ -17,7 +18,7 @@ class Home extends Controller
 
 
       /**
-       * Render view index
+       * index action
        * @return mixed
       */
 	  public function indexAction()

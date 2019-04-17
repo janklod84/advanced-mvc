@@ -36,10 +36,8 @@ class View
       * Constructor
       * @return void
      */
-		 public function __construct()
-		 {
-
-		 }
+		 public function __construct() {}
+	
 
          
      /**
@@ -80,11 +78,11 @@ class View
 		 {
              if($type == 'head')
              {
-             	 return $this->head;
+             	  return $this->head;
 
              }elseif($type == 'body'){
 
-             	 return $this->body;
+             	  return $this->body;
              }
 
              return false;
