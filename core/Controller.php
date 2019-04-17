@@ -7,19 +7,19 @@ class Controller extends Application
         /**
          * @var string
         */
-        protected $_controller;
+        protected $controller;
 
 
         /**
          * @var string
         */
-        protected $_action;
+        protected $action;
 
 
         /**
          * @var string
         */
-        public $_view;
+        public $view;
 
         
         /**
@@ -31,8 +31,8 @@ class Controller extends Application
         public function __construct($controller, $action)
         {
               parent::__construct(); // Application constructor
-              $this->_controller = $controller;
-              $this->_action = $action;
+              $this->controller = $controller;
+              $this->action = $action;
               $this->view = new View();
         }
 }
