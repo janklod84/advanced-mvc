@@ -10,7 +10,7 @@ class Router
          * $controller can named like $part or $path
          * 
          * @param string $url Ex: $url = http://mvc.loc/users/register/567/new
-         * @return 
+         * @return mixed
          */
         public static function route($url)
         {
