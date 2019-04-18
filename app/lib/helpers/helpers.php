@@ -15,7 +15,7 @@ function dnd($data)
 }
 
 
-function pre($data, $die = false)
+function debug($data, $die = false)
 {
 	 echo '<pre>';
      print_r($data);
@@ -24,7 +24,7 @@ function pre($data, $die = false)
 }
 
 
-function debug($data, $die = false)
+function sanitize($dirty)
 {
-	 pre($data, $die);
+	return htmlentities($dirty, ENT_QUOTES, 'UTF-8');
 }

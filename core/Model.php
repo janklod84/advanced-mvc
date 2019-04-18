@@ -140,6 +140,143 @@ class Model
 
             
             /**
+             * Return insert or update record
+             * @return bool
+            */
+            public function save()
+            {
+                $fields = [];
+
+                foreach($this->columnNames as $column)
+                {
+                	$fields[$column] = $this->{$column};
+                }
+
+                // determine whether to update or insert 
+                if(property_exists($this, 'id') && $this->id != '')
+                {
+                	 return $this->update($this->id, $fields);
+
+                }else{
+
+                	return $this->insert($fields);
+                }
+            }
+
+
+
+            /**
+             * Insert data into table
+             * @param array $fields 
+             * @return bool
+            */
+		    public function insert($fields)
+		    {
+                 if(empty($fields))
+                 {
+                 	return false;
+                 }
+
+                 return $this->db->insert($this->table, $fields);
+		    }
+
+
+            /**
+             * Update data [ record ]
+             * @param int $id 
+             * @param array $fields 
+             * @return bool
+            */
+		    public function update($id, $fields)
+		    {
+                if(empty($fields) || $id == '')
+                {
+                	 return false;
+                }
+
+                return $this->db->update($this->table, $id, $fields);
+		    }
+
+            
+            /**
+             * Delete record 
+             * @param int $id 
+             * @return bool
+            */
+		    public function delete($id = '')
+		    {
+                  if($id == '' && $this->id == '')
+                  {
+                  	   return false;
+                  }
+
+                  $id = ($id == '') ? $this->id : $id;
+
+                  if($this->solftDelete)
+                  {
+                  	   return $this->update($id, ['deleted' => 1]);
+                  }
+
+                  return $this->db->delete($this->table, $id);
+		    }
+
+            
+            /**
+             * Execute Query
+             * @param string $sql 
+             * @param array $bind 
+             * @return bool
+             */
+		    public function query($sql, $bind = [])
+		    {
+		    	 return $this->db->query($sql, $bind);
+		    }
+
+
+            
+            /**
+             * Return data
+             * @return array
+            */
+		    public function data()
+		    {
+		    	 $data = new stdClass();
+
+		    	 foreach($this->columnNames as $column)
+		    	 {
+		    	 	$data->column = $this->column;
+		    	 }
+
+		    	 return $data;
+		    }
+
+            
+            /**
+             * Assignement for exemple data from request $_POST
+             * 
+             * @param array $params 
+             * @return void
+            */
+		    public function assign($params)
+		    {
+		    	 if(!empty($params))
+		    	 {
+		    	 	 foreach($params as $key => $val)
+		    	 	 {
+		    	 	 	 if(in_array($key, $this->columnNames))
+		    	 	 	 {
+		    	 	 	 	  $this->{$key} = sanitize($val);
+		    	 	 	 }
+		    	 	 }
+
+		    	 	 return true;
+		    	 }
+
+		    	 false;
+		    }
+
+            
+            /**
              * Populate object data
              * @param object $obj 
              * @return void
