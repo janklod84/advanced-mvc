@@ -114,7 +114,7 @@ class Users  extends Model
           {
           	  $hash = md5(uniqid() + rand(0, 100));
           	  $user_agent = Session::uagent_no_version();
-          	  Cookie::set($this->cookieName, $hash, REMEMBER_COOKIE_EXPIRY);
+          	  Cookie::set($this->cookieName, $hash, REMEMBER_ME_COOKIE_EXPIRY);
           	  $fields = ['session' => $hash, 'user_agent' => $user_agent, 'user_id' => $this->id];
 
           	  $this->db->query("DELETE FROM user_sessions WHERE user_id = ? AND user_agent = ?", [$this->id, $user_agent]);
@@ -123,6 +123,27 @@ class Users  extends Model
           }
      }
 
+      
+      /**
+       * Login User From Cookie
+       * @return 
+      */
+      public static function loginUserFromCookie()
+      {
+           $user_session_model = new UserSessions();
+           $user_session = $user_session_model->findFirst([
+                'conditions' => "user_agent = ? AND session = ?",
+                'bind' => [Session::uagent_no_version(), Cookie::get(REMEMBER_ME_COOKIE_NAME)]
+           ]);
+           
+           if($user_session->user_id != '')
+           {
+               $user= new self((int) $user_session->user_id);
+           }
+
+           $user->login();
+           return $user;
+      }
 
 
      /**
@@ -138,7 +159,7 @@ class Users  extends Model
 
          if(Cookie::exists(REMEMBER_ME_COOKIE_NAME))
          {
-             Cookie::delete(REMEMBER_COOKIE_EXPIRY);
+             Cookie::delete(REMEMBER_ME_COOKIE_NAME);
          }
 
          self::$currentLoggedInUser = null;

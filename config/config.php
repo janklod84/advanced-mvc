@@ -70,9 +70,10 @@ define('DEFAULT_CONTROLLER', 'Home');
  |         CURRENT_USER_SESSION_NAME : session name for logged in user
  |         REMEMBER_ME_COOKIE_NAME   : cookie name for logged in user remember me
  |         REMEMBER_ME_COOKIE_EXPIRY : time in seconds for remember me cookie to live [ 30 days ]
+ |         30 days in seconds = 2592000
  | -----------------------------------------------------------------------------------
 */
 
  define('CURRENT_USER_SESSION_NAME', 'kwXeusqldkiIKjehsLQZJFKJ');
  define('REMEMBER_ME_COOKIE_NAME', 'JAJEI6302L5JVlkdjfh3001jvD');
- define('REMEMBER_ME_COOKIE_EXPIRY', 604800);
+ define('REMEMBER_ME_COOKIE_EXPIRY', 2592000); // seconds

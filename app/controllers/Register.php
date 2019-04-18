@@ -25,7 +25,6 @@ class Register extends Controller
       */
   	  public function loginAction()
   	  {
-           debug(Cookie::all(), true);
            $validation = new Validate();
            
            if($_POST)
