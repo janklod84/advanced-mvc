@@ -64,21 +64,64 @@ class Validate
               	   	   	   switch ($rule)
               	   	   	   {
               	   	   	   	    case 'min': 
-              	   	   	   	    if(strlen($value) < $rule_value)
-              	   	   	   	    {
-              	   	   	   	    	$this->addError(["{$display} must be a minimum of {$rule_value} characters.", $item]);
-              	   	   	   	    }
+	              	   	   	   	    if(strlen($value) < $rule_value)
+	              	   	   	   	    {
+	              	   	   	   	    	$this->addError(["{$display} must be a minimum of {$rule_value} characters.", $item]);
+	              	   	   	   	    }
               	   	   	   	    break;
 
                                 case 'max': 
-              	   	   	   	    if(strlen($value) > $rule_value)
-              	   	   	   	    {
-              	   	   	   	    	$this->addError(["{$display} must be a maximum of {$rule_value} characters.", $item]);
-              	   	   	   	    }
+	              	   	   	   	    if(strlen($value) > $rule_value)
+	              	   	   	   	    {
+	              	   	   	   	    	$this->addError(["{$display} must be a maximum of {$rule_value} characters.", $item]);
+	              	   	   	   	    }
               	   	   	   	    break;
 
 
+                                case 'matches':
+	                                if($value != $source[$rule_value])
+	                                {
+	                                	 $matchDisplay = $items[$rule_value]['display'];
+	                                    $this->addError(["{$matchDisplay} and {$display} must much.", $item]);
+	                                }
+                                break;
 
+                                case 'unique':
+                                 $check = $this->db->query("SELECT {$item} FROM {$rule_value} WHERE {$item} = ?", [$value]);
+
+	                                 if($check->count())
+	                                 {
+	                                 	 $this->addError(["{$display} already exists. Please choose another {$display}", $item]);
+	                                 }
+                                 break;
+
+
+                                 case 'unique_update':
+                                   $t = explode(',', $rule_value);
+                                   $table = $t[0];
+                                   $id = $t[1];
+                                   $query = $this->db->query("SELECT * FROM {$table} WHERE id != ? AND {$item} = ?", [$id, $value]);
+
+                                   if($query->count())
+                                   {
+                                   	   $this->addError(["{$display} already exists. Please choose another {$display}.", $item]);
+                                   }
+                                 break;
+
+
+                                 case 'is_numeric':
+                                   if(!is_numeric($value))
+                                   {
+                                   	   $this->addError(["{$display} has to be a number. Please use a numeric value.", $item]);
+                                   }
+                                 break;
+
+                                 case 'valid_email':
+                                    if(!filter_var($value, FILTER_VALIDATE_EMAIL))
+                                    {
+                                    	  $this->addError(["{$display} must be a valid email address.", $item]);
+                                    }
+                                 break;
               	   	   	   }
               	   	   }
               	   }
@@ -103,5 +146,15 @@ class Validate
 
             	$this->passed = false;
             }
+       }
+
+       
+       /**
+        * Determine if validation passed
+        * @return bool
+       */
+       public function passed()
+       {
+
        }
 }
