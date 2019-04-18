@@ -4,9 +4,9 @@
 class View 
 {
      
-	     /**
-	      * @var string
-	     */
+	   /**
+	     * @var string
+	   */
 		 protected $head;
 
 		 /**

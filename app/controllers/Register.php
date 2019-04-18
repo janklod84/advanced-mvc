@@ -37,7 +37,8 @@ class Register extends Controller
                     ], 
                     'password' => [
                          'display' => 'Password',
-                         'required' => true
+                         'required' => true,
+                         'min' => 6
                     ]
                 ]);
 
@@ -52,9 +53,15 @@ class Register extends Controller
 
                           $user->login($remember);
                           Router::redirect(''); // redirect to home page '/'
+
+                     }else{
+
+                         $validation->addError("There is an error with your username or password.");
                      }
                 }
            }
+
+           $this->view->displayErrors = $validation->displayErrors();
            $this->view->render('register/login');
   	  }
 }
