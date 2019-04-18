@@ -27,7 +27,7 @@ class Model
 	        /**
 	         * @var bool
 	        */
-		    protected $solftDelete = false;
+		    protected $softDelete = false;
 
 	        
 	        /**
@@ -89,6 +89,37 @@ class Model
 
             
             /**
+             * Soft Delete concept
+             * For deleting rows or params from database 
+             * 
+             * @param array $params 
+             * @return bool
+            */
+            protected function softDeleteParams($params)
+            {
+                 if($this->softDelete)
+                 {
+                     if(array_key_exists('conditions', $params))
+                     {
+                            if(is_array($params['conditions']))
+                            {
+                                $params['conditions'][] = "deleted != 1";
+
+                            }else{
+
+                                $params['conditions'] .= " AND deleted != 1";
+                            }
+
+                     }else{
+
+                         $params['conditions'] = "deleted != 1";
+                     }
+                 }
+                 return $params;
+            }
+
+            
+            /**
              * Find item with parses params
              * Extrating params
              * 
@@ -97,6 +128,7 @@ class Model
             */
 		    public function find($params = [])
 		    {
+                 $params = $this->softDeleteParams($params);
                  $results = [];
                  $resultsQuery = $this->db->find($this->table, $params);
 
@@ -119,6 +151,7 @@ class Model
             */
 		    public function findFirst($params = [])
 		    {
+                 $params = $this->softDeleteParams($params);
 		    	 $resultQuery = $this->db->findFirst($this->table, $params);
 		    	 $result = new $this->modelName($this->table);
                  if($resultQuery)
