@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="refresh" content="20">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= $this->siteTitle() ?></title>
     <link rel="stylesheet" href="<?= PROOT ?>css/bootstrap.min.css" media="screen" title="no-title" charset="utf-8">

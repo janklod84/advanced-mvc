@@ -1,8 +1,8 @@
 <?php 
 
 
-// http://mvc.loc/home/index
-class Home extends Controller 
+// http://mvc.loc/register/[login]
+class Register extends Controller 
 {
 
       /**
@@ -14,15 +14,16 @@ class Home extends Controller
       public function __construct($controller, $action)
       {
            parent::__construct($controller, $action);
+           $this->view->setLayout('default');
       }
 
 
       /**
-       * index action
+       * login action
        * @return mixed
       */
-  	  public function indexAction()
+  	  public function loginAction()
   	  {
-           $this->view->render('home/index');
+           $this->view->render('register/login');
   	  }
 }

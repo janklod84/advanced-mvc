@@ -6,6 +6,13 @@
  | ------------------------------------------------------------
 */
 
+
+/**
+ * Functions for pretty print array data
+ * @param array $data
+ * @param bool $die
+*/
+
 function dnd($data)
 {
     echo '<pre>';
@@ -24,6 +31,10 @@ function debug($data, $die = false)
 }
 
 
+/**
+ * Sanitize data
+ * @param mixed $dirty
+*/
 function sanitize($dirty)
 {
 	return htmlentities($dirty, ENT_QUOTES, 'UTF-8');
