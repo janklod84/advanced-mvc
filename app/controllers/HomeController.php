@@ -1,10 +1,10 @@
 <?php 
 
 
-class Restricted extends Controller
+class HomeController extends Controller 
 {
-      
-        /**
+
+      /**
        * Constructor
        * @param string $controller 
        * @param string $action 
@@ -22,6 +22,6 @@ class Restricted extends Controller
       */
   	  public function indexAction()
   	  {
-           $this->view->render('restricted/index');
+           $this->view->render('home/index');
   	  }
 }

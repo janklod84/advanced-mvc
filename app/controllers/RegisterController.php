@@ -2,7 +2,7 @@
 
 
 // http://mvc.loc/register/[login]
-class Register extends Controller 
+class RegisterController extends Controller 
 {
 
       /**

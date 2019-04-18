@@ -1,10 +1,9 @@
 <?php 
 
 
-// http://mvc.loc/home/index
-class Home extends Controller 
+class RestrictedController extends Controller
 {
-
+      
       /**
        * Constructor
        * @param string $controller 
@@ -23,6 +22,6 @@ class Home extends Controller
       */
   	  public function indexAction()
   	  {
-           $this->view->render('home/index');
+           $this->view->render('restricted/index');
   	  }
 }

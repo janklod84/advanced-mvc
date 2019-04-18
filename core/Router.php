@@ -16,8 +16,8 @@ class Router
         {
 
         	 // controller
-             $controller = (isset($url[0]) && $url[0] != '') ? ucwords($url[0]) : DEFAULT_CONTROLLER;
-             $controller_name = $controller; // Users
+             $controller = (isset($url[0]) && $url[0] != '') ? ucwords($url[0]) . 'Controller' : DEFAULT_CONTROLLER . 'Controller';
+             $controller_name = str_replace('Controller', '', $controller);
              array_shift($url);
 
              // action 
@@ -33,7 +33,8 @@ class Router
              if(!$grantAccess) 
              {
                  # we'll change controller name to:
-                 $controller_name = $controller = ACCESS_RESTRICTED;
+                 $controller = ACCESS_RESTRICTED.'Controller';
+                 $controller_name = ACCESS_RESTRICTED;
                  $action = 'indexAction';
              }
 
