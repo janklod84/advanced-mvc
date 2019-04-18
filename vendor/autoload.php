@@ -1,5 +1,7 @@
 <?php 
 
+
+
 function autoload($className)
 {
 	    if(file_exists(ROOT . DS . 'core' . DS . $className . '.php'))
