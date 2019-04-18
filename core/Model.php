@@ -71,6 +71,7 @@ class Model
                 $columns = $this->get_columns();
                 foreach($columns as $column)
                 {
+                     $columnName = $column->Field;
                 	 $this->columnNames[] = $column->Field;
                 	 $this->{$columnName} = null;
                 }
@@ -244,7 +245,7 @@ class Model
 
 		    	 foreach($this->columnNames as $column)
 		    	 {
-		    	 	$data->column = $this->column;
+		    	 	   $data->column = $this->column;
 		    	 }
 
 		    	 return $data;
@@ -283,7 +284,7 @@ class Model
             */
 		    protected function populateObjData($result)
 		    {
-                 foreach($result as $key => $value)
+                 foreach($result as $key => $val)
                  {
                  	   $this->{$key} = $val;
                  }

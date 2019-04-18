@@ -18,7 +18,7 @@ class Users  extends Model
      /**
       * @var string
      */
-     private $cookieName
+     private $cookieName;
 
      
      /**

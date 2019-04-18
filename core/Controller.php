@@ -35,4 +35,18 @@ class Controller extends Application
               $this->action = $action;
               $this->view = new View();
         }
+
+        
+        /**
+         * Load model
+         * @param string $model 
+         * @return void
+         */
+        protected function loadModel($model)
+        {
+             if(class_exists($model))
+             {
+                  $this->{$model.'Model'} = new $model(strtolower($model));
+             }
+        }
 }
