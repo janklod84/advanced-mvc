@@ -6,6 +6,11 @@
  | ------------------------------------------------------------
 */
 
+/**
+define('DS', DIRECTORY_SEPARATOR); 
+to (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') ? define('DS', '/') : define('DS', DIRECTORY_SEPARATOR);
+**/
+
 define('DS', DIRECTORY_SEPARATOR);
 define('ROOT', dirname(__FILE__));
 

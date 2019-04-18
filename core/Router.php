@@ -141,7 +141,114 @@ class Router
 
          }
 
+         
+         /**
+          * Get Menu
+          * @param string $menu 
+          * @return mixed
+        */
+         public static function getMenu($menu)
+         {
+              $menuArray = [];
+              $menuFile = file_get_contents(ROOT . DS . 'app' . DS . $menu . '.json');
+              $acl = json_decode($menuFile, true);
+              
+              /** debug($acl, true); */
+
+              foreach($acl as $key => $val)
+              {
+                  if(is_array($val))
+                  {
+                          $sub = [];
+
+                          foreach($val as $k => $v)
+                          {
+                               if($key == 'separator' && !empty($sub))
+                               {
+                                    $sub[$k] = '';
+                                    continue;
+
+                               }else if($finalVal = self::get_link($v)){
+
+                                    $sub[$k] = $finalVal;
+                               }
+                          }
+
+                          if(!empty($sub))
+                          {
+                             $menuArray[$key] = $sub;
+                          }
+
+                  } else{ // if not an array
+
+                        if($finalVal = self::get_link($val))
+                        {
+                             $menuArray[$key] = $finalVal;
+                        }
+                  
+                  } // End if is array
+
+              
+               } // end foreach
+               
+               return $menuArray;
+
+         } // end getMenu
+
+         
+         /**
+          * Return links
+          * @param mixed $val 
+          * @return mixed
+         */
+         private static function get_link($val)
+         {
+               // check if external link [ if pregmatch is true or matches params ]
+               if(preg_match('/https?:\/\//', $val) == 1)
+               {
+                    return $val;
+
+               }else{
+   
+                    // $uArray = explode(DS, $val);
+                    $uArray = explode('/', $val);
+                    
+                    $controller_name = ucwords($uArray[0]);
+                    $action_name = (isset($uArray[1])) ? $uArray[1] : '';
+                    
+                    # if has access we'll return Link if not we'll return false
+                    if(self::hasAccess($controller_name, $action_name))
+                    {
+                         return PROOT . $val;
+
+                    }
+
+                    return false;
+               }
+         }
+
 
 
 
 }
+
+/*
+Array
+(
+    [Home] => home
+    [Tools] => Array
+        (
+            [My Tools] => tools
+            [Tool 1] => tools/first
+            [Tool 2] => tools/second
+            [separator] => 
+            [Tool 3] => tools/third
+        )
+
+    [Google] => https://www.google.com
+    [PHP Docs] => http://php.net/manual/fr
+    [Login] => register/login
+    [Logout] => register/logout
+)
+
+*/
