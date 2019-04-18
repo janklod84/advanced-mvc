@@ -131,6 +131,7 @@ class Users  extends Model
       public static function loginUserFromCookie()
       {
            $userSession = UserSessions::getFromCookie();
+
            if($userSession->user_id != '')
            {
                $user= new self((int) $userSession->user_id);
@@ -167,6 +168,19 @@ class Users  extends Model
 
          self::$currentLoggedInUser = null;
          return true;
+     }
+
+     
+     /**
+      * Register / Create new User
+      * @return void
+     */
+     public function registerNewUser($params)
+     {
+          $this->assign($params);
+          $this->deleted = 0;
+          $this->password = password_hash($this->password, PASSWORD_DEFAULT);
+          $this->save();
      }
 
 

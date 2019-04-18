@@ -48,3 +48,23 @@ function currentUser()
 {
 	return Users::currentLoggedInUser();
 }
+
+
+/**
+ * Sanitize posted data and return them
+ * And conserve values
+ * 
+ * @param array $post from request $_POST
+ * @return array
+*/ 
+function posted_values($post)
+{
+    $clean_array = [];
+
+    foreach($post as $key => $value)
+    {
+        $clean_array[$key] = sanitize($value);
+    }
+
+    return $clean_array;
+}
