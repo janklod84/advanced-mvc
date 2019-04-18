@@ -11,6 +11,6 @@ Everythings restricted
 		"denied" : {},
 		"Home" : ["*"],
 		"Register" : ["login", "register"],
-		"Restricted" : [*] 
+		"Restricted" : ["*""] 
 	}
 }

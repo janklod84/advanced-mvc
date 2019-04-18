@@ -77,3 +77,13 @@ define('DEFAULT_CONTROLLER', 'Home');
  define('CURRENT_USER_SESSION_NAME', 'kwXeusqldkiIKjehsLQZJFKJ');
  define('REMEMBER_ME_COOKIE_NAME', 'JAJEI6302L5JVlkdjfh3001jvD');
  define('REMEMBER_ME_COOKIE_EXPIRY', 2592000); // seconds
+
+
+ /*
+ | -------------------------------------------------------------------
+ |         CONSTANT FOR ACCESS CONTROL LEVEL [ACL]
+ |         Restricted is Controller name for the restricted redirect
+ | -------------------------------------------------------------------
+*/
+
+ define('ACCESS_RESTRICTED', 'Restricted'); 
