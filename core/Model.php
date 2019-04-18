@@ -119,9 +119,12 @@ class Model
             */
 		    public function findFirst($params = [])
 		    {
-		    	 $resultsQuery = $this->db->findFirst($this->table, $params);
+		    	 $resultQuery = $this->db->findFirst($this->table, $params);
 		    	 $result = new $this->modelName($this->table);
-                 $result->populateObjData($resultsQuery);
+                 if($resultQuery)
+                 {
+                    $result->populateObjData($resultQuery);
+                 }
                  return $result;
 		    }
 

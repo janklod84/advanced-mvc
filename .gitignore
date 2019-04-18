@@ -1,4 +1,4 @@
 .gitignore
-vendor
+/vendor
 /app/OLD/DB
 /app/OLD/Git

@@ -25,11 +25,24 @@ class Register extends Controller
       */
   	  public function loginAction()
   	  {
+           $validation = new Validate();
+
            if($_POST)
            {
                 // form validation
-                $validation = true;
-                if($validation === true)
+                $validation->check($_POST, [
+                    'username' => [
+                        'display'  => "Username",  
+                        'required' => true,   
+                    ], 
+                    'password' => [
+                         'display' => 'Password',
+                         'required' => true
+                    ]
+                ]);
+
+
+                if($validation->passed())
                 {
                      $user = $this->UsersModel->findByUsername($_POST['username']);
                      
@@ -38,7 +51,7 @@ class Register extends Controller
                           $remember = (isset($_POST['remember_me']) && Input::get('remember_me')) ? true : false;
 
                           $user->login($remember);
-                          Router::redirect('');
+                          Router::redirect(''); // redirect to home page '/'
                      }
                 }
            }
