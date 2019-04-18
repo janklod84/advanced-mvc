@@ -62,3 +62,17 @@ define('DEFAULT_CONTROLLER', 'Home');
 */
 
  define('SITE_TITLE', 'JanKlod MVC Framework');
+
+
+/*
+ | -----------------------------------------------------------------------------------
+ |         SESSION & COOKIE CONSTANTS
+ |         CURRENT_USER_SESSION_NAME : session name for logged in user
+ |         REMEMBER_ME_COOKIE_NAME   : cookie name for logged in user remember me
+ |         REMEMBER_ME_COOKIE_EXPIRY : time in seconds for remember me cookie to live [ 30 days ]
+ | -----------------------------------------------------------------------------------
+*/
+
+ define('CURRENT_USER_SESSION_NAME', 'kwXeusqldkiIKjehsLQZJFKJ');
+ define('REMEMBER_ME_COOKIE_NAME', 'JAJEI6302L5JVlkdjfh3001jvD');
+ define('REMEMBER_ME_COOKIE_EXPIRY', 604800);

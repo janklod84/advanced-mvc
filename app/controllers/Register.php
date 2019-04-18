@@ -14,6 +14,7 @@ class Register extends Controller
       public function __construct($controller, $action)
       {
            parent::__construct($controller, $action);
+           $this->load_model('Users'); // load_model() dynamically generate from Controller 
            $this->view->setLayout('default');
       }
 
