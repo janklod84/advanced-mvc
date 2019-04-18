@@ -139,6 +139,114 @@ class DB
              return $this;
 
 	   }// end query method
+       
+       
+       /**
+        * Read item from table
+        * @param string $table 
+        * @param array $params 
+        * @return bool
+        */
+       protected function read($table, $params = [])
+       {
+	           $conditionString = '';
+	           $bind = [];
+	           $order = '';
+	           $limit = '';
+
+
+	           // conditions
+	           if(isset($params['conditions']))
+	           {
+	           	   if(is_array($params['conditions']))
+	           	   {
+	           	   	   foreach($params['conditions'] as $condition)
+	           	   	   {
+	           	   	   	   $conditionString .= ' '. $condition . ' AND';
+	           	   	   }
+
+	           	   	   $conditionString = trim($conditionString);
+	           	   	   $conditionString = rtrim($conditionString, ' AND');
+
+	           	   }else{
+
+	           	   	  $conditionString = $params['conditions'];
+	           	   }
+
+	           	   if($conditionString != '')
+	           	   {
+	           	   	    $conditionString = ' WHERE ' . $conditionString;
+	           	   }
+	           }
+
+
+	           // bind 
+	           if(array_key_exists('bind', $params))
+	           {
+	           	   $bind = $params['bind'];
+	           }
+
+
+	           // order 
+	           if(array_key_exists('order', $params))
+	           {
+	           	   $order = ' ORDER BY ' . $params['order'];
+	           }
+
+	           // limit
+	           if(array_key_exists('limit', $params))
+	           {
+	           	    $limit = ' LIMIT '. $params['limit'];
+	           }
+
+	           $sql = sprintf('SELECT * FROM %s%s%s%s', $table, $conditionString, $order, $limit);
+
+	           if($this->query($sql, $bind))
+	           {
+	           	   if(!count($this->result))
+	           	   {
+	           	   	    return false;
+	           	   }
+
+	           	   return true;
+	           }
+
+	           return false;
+       }
+
+       
+       /**
+        * Find item from table
+        * @param string $table 
+        * @param array $params 
+        * @return bool
+       */
+       public function find($table, $params = [])
+       {
+             if($this->read($table, $params))
+             {
+             	 return $this->results();
+             }
+
+             return false;
+       }
+
+
+       /**
+        * Find first item from table
+        * @param string $table 
+        * @param array $params 
+        * @return bool
+       */
+       public function findFirst($table, $params = [])
+       {
+             if($this->read($table, $params))
+             {
+             	 return $this->first();
+             }
+
+             return false;
+       }
 
 
        

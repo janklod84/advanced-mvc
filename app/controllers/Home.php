@@ -24,9 +24,12 @@ class Home extends Controller
   	  public function indexAction()
   	  {
             $db = DB::getInstance();
-            $columns = $db->get_columns('contacts');
+            $contacts = $db->findFirst('contacts', [
+               'conditions' => ['lname = ?'], 
+               'bind' => ['Yao']
+            ]);
 
-            debug($columns);
+            debug($contacts);
             $this->view->render('home/index');
   	  }
 }
