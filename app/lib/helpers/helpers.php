@@ -22,3 +22,9 @@ function pre($data, $die = false)
      echo '</pre>';
      if($die) die;
 }
+
+
+function debug($data, $die = false)
+{
+	 pre($data, $die);
+}

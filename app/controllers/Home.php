@@ -24,8 +24,9 @@ class Home extends Controller
   	  public function indexAction()
   	  {
             $db = DB::getInstance();
-            $db->delete('contacts', 3);
-          
+            $columns = $db->get_columns('contacts');
+
+            debug($columns);
             $this->view->render('home/index');
   	  }
 }

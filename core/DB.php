@@ -222,17 +222,67 @@ class DB
        */
        public function delete($table, $id)
        {
-          $sql = sprintf('DELETE FROM %s WHERE id = ?', $table, $id);
-          $values[] = $id;
+	          $sql = sprintf('DELETE FROM %s WHERE id = ?', $table, $id);
+	          $values[] = $id;
 
-          if(!$this->query($sql, $values)->error())
-          {
-          	  return true;
-          }
+	          if(!$this->query($sql, $values)->error())
+	          {
+	          	  return true;
+	          }
 
-          return false;
+	          return false;
+       }
+
+       
+       /**
+        * Get results query
+        * @return array
+       */
+       public function results()
+       {
+       	   return $this->result;
+       }
+
+       
+       /**
+        * Return first record
+        * @return null|array
+       */
+       public function first()
+       {
+           return !empty($this->result) ? $this->result[0] : [];
        }
        
+       
+       /**
+        * Return count of records
+        * @return int
+       */
+       public function count()
+       {
+       	   return $this->count;
+       }
+
+
+       
+       /**
+        * Return last insert ID
+        * @return int
+       */
+       public function lastID()
+       {
+           return $this->lastInsertID;
+       }
+
+       
+       /**
+        * Get columns
+        * @return 
+       */
+       public function get_columns($table)
+       {
+           return $this->query("SHOW COLUMNS FROM {$table}")->results();
+       }
 
 
        /**
