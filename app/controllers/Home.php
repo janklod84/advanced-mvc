@@ -25,8 +25,8 @@ class Home extends Controller
   	  {
             $db = DB::getInstance();
             $contacts = $db->findFirst('contacts', [
-               'conditions' => ['lname = ?'], 
-               'bind' => ['Yao']
+               'conditions' => "id = ?", 
+               'bind' => [1]
             ]);
 
             debug($contacts);
