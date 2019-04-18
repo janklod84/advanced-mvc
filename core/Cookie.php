@@ -11,14 +11,14 @@ class Cookie
       * @param int $expiry 
       * @return bool
       */
-	 public static function set($name, $value, $expiry)
-	 {
-	 	  if(setcookie($name, $value, time() + $expiry, '/'))
-	 	  {
-	 	  	   return true;
-	 	  }
-	 	  return false;
-	 }
+  	 public static function set($name, $value, $expiry)
+  	 {
+      	 	  if(setcookie($name, $value, time() + $expiry, '/'))
+      	 	  {
+      	 	  	   return true;
+      	 	  }
+  	 	      return false;
+  	 }
 
      
      /**
@@ -26,10 +26,10 @@ class Cookie
       * @param string $name 
       * @return void
       */
-	 public static function delete($name)
-	 {
-          self::set($name, '', time() - 1);
-	 }
+  	 public static function delete($name)
+  	 {
+            self::set($name, '', time() - 1);
+  	 }
 
      
      /**
@@ -37,10 +37,10 @@ class Cookie
       * @param string $name 
       * @return mixed
      */
-	 public static function get($name)
-	 {
-	 	  return $_COOKIE[$name];
-	 }
+  	 public static function get($name)
+  	 {
+  	 	  return $_COOKIE[$name];
+  	 }
 
      
      /**
@@ -48,10 +48,20 @@ class Cookie
       * @param string $name 
       * @return bool
      */
-	 public static function exists($name)
-	 {
-         return isset($_COOKIE[$name]);
-	 }
+  	 public static function exists($name)
+  	 {
+           return isset($_COOKIE[$name]);
+  	 }
+
+
+     /**
+      * Get all cookies
+      * @return array
+     */
+     public static function all()
+     {
+         return $_COOKIE ?? [];
+     }
 
 	 
 }

@@ -20,13 +20,14 @@ class Register extends Controller
 
 
       /**
-       * login action
-       * @return mixed
+       * Login action
+       * @return void
       */
   	  public function loginAction()
   	  {
+           debug(Cookie::all(), true);
            $validation = new Validate();
-
+           
            if($_POST)
            {
                 // form validation
@@ -64,4 +65,19 @@ class Register extends Controller
            $this->view->displayErrors = $validation->displayErrors();
            $this->view->render('register/login');
   	  }
+
+
+      /**
+       * Logout action
+       * @return void
+      */
+      public function logoutAction()
+      {
+         if(currentUser())
+         {
+              currentUser()->logout();
+         }
+
+         Router::redirect('register/login');
+      }
 }

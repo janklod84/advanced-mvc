@@ -39,3 +39,12 @@ function sanitize($dirty)
 {
 	return htmlentities($dirty, ENT_QUOTES, "UTF-8");
 }
+
+
+/**
+ * Return current logged user 
+*/ 
+function currentUser()
+{
+	return Users::currentLoggedInUser();
+}

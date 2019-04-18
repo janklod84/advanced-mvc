@@ -82,6 +82,23 @@ class Users  extends Model
      	        ]);
      }
 
+     
+
+     /**
+      * Return current logged User
+      * @return 
+     */
+     public static function currentLoggedInUser()
+     {
+           if(!isset(self::$currentLoggedInUser) && Session::exists(CURRENT_USER_SESSION_NAME))
+           {
+                  $u = new Users((int) Session::get(CURRENT_USER_SESSION_NAME));
+                  self::$currentLoggedInUser = $u;
+           }
+
+           return self::$currentLoggedInUser;
+     }
+
 
      
      /**
@@ -104,6 +121,28 @@ class Users  extends Model
 
           	  $this->db->insert('user_sessions', $fields);
           }
+     }
+
+
+
+     /**
+      * User logout
+      * @return bool
+     */
+     public function logout()
+     {
+         $user_agent = Session::uagent_no_version();
+         $this->db->query("DELETE FROM user_sessions WHERE user_id = ? AND user_agent = ?", [$this->id, $user_agent]);
+
+         Session::delete(CURRENT_USER_SESSION_NAME);
+
+         if(Cookie::exists(REMEMBER_ME_COOKIE_NAME))
+         {
+             Cookie::delete(REMEMBER_COOKIE_EXPIRY);
+         }
+
+         self::$currentLoggedInUser = null;
+         return true;
      }
 
 

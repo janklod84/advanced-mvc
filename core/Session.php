@@ -52,6 +52,17 @@ class Session
               }
         }
 
+
+
+       /**
+          * Get all cookies
+          * @return array
+       */
+       public static function all()
+       {
+            return $_SESSION ?? [];
+       }
+
         
         /**
          * Store version number
