@@ -30,6 +30,20 @@ class Model
 		    protected $softDelete = false;
 
 
+            
+            /**
+             * @var bool
+            */
+            protected $validates = true;
+
+
+            /**
+             * @var array
+            */
+            protected $validationErrors = [];
+
+
+
 
 	        /**
 	         * @var int
@@ -144,17 +158,27 @@ class Model
             */
             public function save()
             {
-                $fields = H::getObjectProperties($this);
-
-                // determine whether to update or insert 
-                if(property_exists($this, 'id') && $this->id != '')
+                // Run validator before saving
+                $this->validator();
+                
+                // if validation passed, we will run next scripts
+                if($this->validates)
                 {
-                	 return $this->update($this->id, $fields);
+                    // Get fields current Model
+                    $fields = H::getObjectProperties($this);
 
-                }else{
+                    // determine whether to update or insert 
+                    if(property_exists($this, 'id') && $this->id != '')
+                    {
+                         return $this->update($this->id, $fields);
 
-                	return $this->insert($fields);
+                    }else{
+
+                        return $this->insert($fields);
+                    }
                 }
+                
+                return false;
             }
 
 
@@ -282,4 +306,62 @@ class Model
                  	   $this->{$key} = $val;
                  }
 		    }
+
+            
+            /**
+             * Validator
+             * @return 
+            */
+            public function validator(){}
+            
+
+            
+            /**
+             * Run validator
+             * @param Validator $validator 
+             * @return void
+            */
+            public function runValidation($validator)
+            {
+                 $key = $validator->field;
+
+                 if(!$validator->success)
+                 {
+                     $this->validates = false;
+                     $this->validationErrors[$key] = $validator->msg;
+                 }
+            }
+
+            
+            /**
+             * Get Error messages
+             * @return array
+            */
+            public function getErrorMessages()
+            {
+                return $this->validationErrors;
+            }
+
+            
+            /**
+             * Get all passed validation
+             * @return bool
+            */
+            public function validationPasses()
+            {
+                return $this->validates;
+            }
+
+            
+            /**
+             * Add Error Message
+             * @param string $field
+             * @param string $msg
+             * @return void
+            */
+            public function addErrorMessage($field, $msg)
+            {
+                  $this->validates = false;
+                  $this->validationErrors[$field] = $msg;
+            }
 }

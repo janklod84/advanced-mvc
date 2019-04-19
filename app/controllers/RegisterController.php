@@ -87,22 +87,12 @@ class RegisterController extends Controller
       */
       public function registerAction()
       {
-         $validation = new Validate();
-
-         $posted_values = [
-           'fname'    => '', 
-           'lname'    => '', 
-           'username' => '',
-           'email'    => '',
-           'password' => '',
-           'confirm'  => '',
-         ];
-
+         $newUser = new Users();
 
          if($_POST)
          {
-             $posted_values = FH::posted_values($_POST);
 
+             /*
              $validation->check($_POST, [
                 'fname'    => [
                     'display'  => 'First Name',  
@@ -137,19 +127,20 @@ class RegisterController extends Controller
                     'matches' => 'password'
                 ]
              ], true);
+
+            */
+
+             $newUser->assign($_POST);
+
+             if($newUser->save())
+             {
+                 Router::redirect('register/login');
+             }
+       
          }
-
-         
-         if($validation->passed())
-         {
-             $newUser = new Users();
-             $newUser->registerNewUser($_POST);
-             Router::redirect('register/login');
-         }
-
-
-         $this->view->post = $posted_values;
-         $this->view->displayErrors = $validation->displayErrors();
+      
+         $this->view->newUser = $newUser;
+         $this->view->displayErrors = $newUser->getErrorMessages();
          $this->view->render('register/register');
       }
 }

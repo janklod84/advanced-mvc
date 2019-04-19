@@ -61,7 +61,7 @@ class Users  extends Model
           parent::__construct($table);
           $this->sessionName = CURRENT_USER_SESSION_NAME;
           $this->cookieName  = REMEMBER_ME_COOKIE_NAME;
-          $this->solftDelete = true;
+          $this->softDelete = true;
 
           if($user != '')
           {
@@ -92,7 +92,19 @@ class Users  extends Model
           }
      }// end construct
 
- 
+     
+     /**
+      * Validator fields
+      * @return bool
+     */
+     public function validator()
+     {
+         $this->runValidation(new MinValidator($this, [
+              'field' => 'username', 
+              'rule' => 6, 
+              'msg' => 'Username must be at least 6 characters.'
+         ]));
+     } 
      
      /**
       * Find user by username

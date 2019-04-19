@@ -38,16 +38,16 @@ class DB
 	     private $result;
 
 
-	   /**
-        * @var int
-       */
-	   private $count = 0;
+  	   /**
+          * @var int
+         */
+  	   private $count = 0;
 
 
-	   /**
-        * @var int 
-       */
-	   private $lastInsertID = null;
+  	   /**
+          * @var int 
+         */
+  	   private $lastInsertID = null;
 
        
        /**
