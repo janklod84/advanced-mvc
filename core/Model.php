@@ -39,7 +39,7 @@ class Model
 	        /**
 	         * @var int
 	        */
-		    protected $id;
+		    public $id;
 
 
 	        
@@ -131,6 +131,7 @@ class Model
                  $params = $this->softDeleteParams($params);
                  $results = [];
                  $resultsQuery = $this->db->find($this->table, $params);
+                 if(!$resultsQuery) { return []; }
 
                  foreach($resultsQuery as $result)
                  {

@@ -18,8 +18,8 @@
 */
 
 define('DB_NAME', 'jk_basic_mvc');
-define('DB_USER', 'root');
-define('DB_PASSWORD', '');
+define('DB_USER', 'basicmvc');
+define('DB_PASSWORD', 'basicmvc');
 define('DB_HOST', '127.0.0.1');
 
 
