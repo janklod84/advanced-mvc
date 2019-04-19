@@ -155,10 +155,16 @@ class Model
                  $params = $this->softDeleteParams($params);
 		    	 $resultQuery = $this->db->findFirst($this->table, $params);
 		    	 $result = new $this->modelName($this->table);
+                 
                  if($resultQuery)
                  {
-                    $result->populateObjData($resultQuery);
+                     $result->populateObjData($resultQuery);
+
+                 }else{
+
+                     $result = false;
                  }
+
                  return $result;
 		    }
 
@@ -250,7 +256,7 @@ class Model
 
                   $id = ($id == '') ? $this->id : $id;
 
-                  if($this->solftDelete)
+                  if($this->softDelete)
                   {
                   	   return $this->update($id, ['deleted' => 1]);
                   }

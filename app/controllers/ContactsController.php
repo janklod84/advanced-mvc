@@ -60,4 +60,41 @@ class ContactsController extends Controller
   	  	   $this->view->postAction = PROOT . 'contacts/add';
            $this->view->render('contacts/add');
   	  }
+
+
+      
+      /**
+       * Details action
+       * @param int $id
+       * @return void
+      */
+  	  public function detailsAction($id)
+  	  {
+          $contact = $this->ContactsModel->findByIdAndUserId((int)$id, currentUser()->id);
+          if(!$contact)
+          {
+          	 Router::redirect('contacts');
+          }
+
+          $this->view->contact = $contact;
+          $this->view->render('contacts/details');
+  	  }
+
+      
+      /**
+       * Delete action
+       * @param int $id 
+       * @return id
+      */
+  	  public function deleteAction($id)
+  	  {
+          $contact = $this->ContactsModel->findByIdAndUserId((int)$id, currentUser()->id);
+          
+          if($contact)
+          {
+          	  $contact->delete();
+          }
+          Router::redirect('contacts');
+  	  }
+
 }
