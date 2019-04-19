@@ -4,6 +4,14 @@
 class Contacts  extends Model
 {
        
+
+       /**
+        * For column 'deleted'
+        * @var int
+       */
+       public $deleted = 0;
+
+
        /**
         * Constructor
         * @return void
@@ -14,6 +22,21 @@ class Contacts  extends Model
        	     parent::__construct($table);
        	     $this->softDelete = true;
        }
+
+
+       public static $addValidation = [
+             'fname' => [
+                'display'  => 'First Name',
+                'required' => true,
+                'max' => 155
+             ],
+             'lname' => [
+                'display'  => 'Last Name',
+                'required' => true,
+                'max' => 155
+             ]
+       ];
+
 
        
        /**

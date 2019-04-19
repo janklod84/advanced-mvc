@@ -152,4 +152,28 @@ class View
 		 {
 		 	     $this->layout = $path;
 		 }
+
+     
+     /**
+      * Insert some parts
+      * @param string $path 
+      * @return void
+     */
+     public function insert($path)
+     {
+         include ROOT . DS . 'app' . DS . 'views' . DS . $path . '.php';
+     }
+
+
+     
+     /**
+      * Insert partials
+      * @param string $group
+      * @param string $partial
+      * @return void
+     */
+     public function partial($group, $partial)
+     {
+          include ROOT . DS . 'app' . DS . 'views' . DS . $group . DS .'partials' . DS . $partial . '.php';
+     }
 }
