@@ -88,7 +88,8 @@ class FH
 
         
         /**
-         * Generate Token
+         * Generate Token 
+         * CSRF [Crost Security Request Form]
          * @return string
          */
 		public static function generateToken()
@@ -109,10 +110,45 @@ class FH
 			return (Session::exists('csrf_token') && Session::get('csrf_token') == $token);
 		}
 
-
+        
+        /**
+         * Generate input hidden for csrf
+         * @return string
+         */
 		public static function csrfInput()
 		{
 			return '<input type="hidden" name="csrf_token" id="csrf_token" value="'. self::generateToken() .'" />';
 		}
+
+
+	    /**
+		 * Sanitize data
+		 * @param mixed $dirty
+		*/
+		public static function  sanitize($dirty)
+		{
+			return htmlentities($dirty, ENT_QUOTES, "UTF-8");
+		}
+
+
+		/**
+		 * Sanitize posted data and return them
+		 * And conserve values
+		 * 
+		 * @param array $post from request $_POST
+		 * @return array
+		*/ 
+		public static function  posted_values($post)
+		{
+		    $clean_array = [];
+
+		    foreach($post as $key => $value)
+		    {
+		        $clean_array[$key] = self::sanitize($value);
+		    }
+
+		    return $clean_array;
+		}
+
 
 }

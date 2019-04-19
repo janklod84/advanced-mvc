@@ -1,6 +1,6 @@
 <?php 
   $menu = Router::getMenu('menu_acl'); /* debug($menu, true); */
-  $currentPage = currentPage();
+  $currentPage = H::currentPage();
 ?>
 <nav class="navbar navbar-default">
   <div class="container-fluid">
@@ -46,8 +46,8 @@
         <?php endforeach; ?>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <?php if(currentUser()): ?>
-          <li><a href="">Hello, <?= currentUser()->fname ?></a></li>
+        <?php if(Users::currentUser()): ?>
+          <li><a href="">Hello, <?= Users::currentUser()->fname ?></a></li>
         <?php else: ?>
         <?php endif; ?>
       </ul>
