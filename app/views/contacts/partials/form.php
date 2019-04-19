@@ -1,5 +1,9 @@
 <form class="form" action="<?= $this->postAction ?>" method="POST">
-	 <div class="bg-danger form-errors"><?= $this->displayErrors ?></div>
+	 
+	 <div class="form-errors"><?= $this->displayErrors ?></div>
+
+	 <?= FH::csrfInput(); ?>
+	 
 	 <?= inputBlock('text', 'First Name', 'fname', $this->contact->fname, [
        'class' => 'form-control'
 	 ], [

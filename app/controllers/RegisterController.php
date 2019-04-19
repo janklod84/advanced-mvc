@@ -40,7 +40,7 @@ class RegisterController extends Controller
                          'required' => true,
                          'min' => 6
                     ]
-                ]);
+                ], true); // true for csrf Token
 
 
                 if($validation->passed())
@@ -136,7 +136,7 @@ class RegisterController extends Controller
                     'required' => true, 
                     'matches' => 'password'
                 ]
-             ]);
+             ], true);
          }
 
          

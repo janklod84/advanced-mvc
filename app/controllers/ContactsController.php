@@ -44,7 +44,7 @@ class ContactsController extends Controller
   	  	   if($_POST)
   	  	   {
                $contact->assign($_POST);
-               $validation->check($_POST, Contacts::$addValidation);
+               $validation->check($_POST, Contacts::$addValidation, true);
 
                if($validation->passed())
                {
@@ -80,7 +80,7 @@ class ContactsController extends Controller
           if($_POST)
           {
           	   $contact->assign($_POST);
-          	   $validation->check($_POST, Contacts::$addValidation);
+          	   $validation->check($_POST, Contacts::$addValidation, true);
 
           	   if($validation->passed())
           	   {
