@@ -29,11 +29,6 @@ class Model
 	        */
 		    protected $softDelete = false;
 
-	        
-	        /**
-	         * @var array
-	        */
-		    protected $columnNames = [];
 
 
 	        /**
@@ -54,30 +49,10 @@ class Model
 		    {
                    $this->db = DB::getInstance();
                    $this->table = $table;
-                   $this->setTableColumns();
                    $this->modelName = str_replace(' ', '', ucwords(str_replace('_', ' ', $this->table)));
 		    }
 
-            
-            /**
-             * set table columns
-             * $column have property Field, Key [ all properties written with uppercase]
-             * var_dump($column) for see more ...
-             * 
-             * @return void
-            */
-		    protected function setTableColumns()
-		    {
-                $columns = $this->get_columns();
-                foreach($columns as $column)
-                {
-                     $columnName = $column->Field;
-                	 $this->columnNames[] = $column->Field;
-                	 $this->{$columnName} = null;
-                }
-		    }
-
-            
+        
             /**
              * Get columns
              * @return array
@@ -129,18 +104,9 @@ class Model
 		    public function find($params = [])
 		    {
                  $params = $this->softDeleteParams($params);
-                 $results = [];
-                 $resultsQuery = $this->db->find($this->table, $params);
+                 $resultsQuery = $this->db->find($this->table, $params, get_class($this));
                  if(!$resultsQuery) { return []; }
-
-                 foreach($resultsQuery as $result)
-                 {
-                 	   $obj = new $this->modelName($this->table);
-                 	   $obj->populateObjData($result);
-                 	   $results[] = $obj;
-                 }
-
-                 return $results;
+                 return $resultsQuery;
 		    }
 
 
@@ -153,19 +119,8 @@ class Model
 		    public function findFirst($params = [])
 		    {
                  $params = $this->softDeleteParams($params);
-		    	 $resultQuery = $this->db->findFirst($this->table, $params);
-		    	 $result = new $this->modelName($this->table);
-                 
-                 if($resultQuery)
-                 {
-                     $result->populateObjData($resultQuery);
-
-                 }else{
-
-                     $result = false;
-                 }
-
-                 return $result;
+		    	 $resultQuery = $this->db->findFirst($this->table, $params, get_class($this));
+                 return $resultQuery;
 		    }
 
             
@@ -189,12 +144,7 @@ class Model
             */
             public function save()
             {
-                $fields = [];
-
-                foreach($this->columnNames as $column)
-                {
-                	$fields[$column] = $this->{$column};
-                }
+                $fields = getObjectProperties($this);
 
                 // determine whether to update or insert 
                 if(property_exists($this, 'id') && $this->id != '')
@@ -286,9 +236,9 @@ class Model
 		    {
 		    	 $data = new stdClass();
 
-		    	 foreach($this->columnNames as $column)
+		    	 foreach(getObjectProperties($this) as $column => $value)
 		    	 {
-		    	 	   $data->column = $this->column;
+		    	 	   $data->column = $value;
 		    	 }
 
 		    	 return $data;
@@ -307,7 +257,7 @@ class Model
 		    	 {
 		    	 	 foreach($params as $key => $val)
 		    	 	 {
-		    	 	 	 if(in_array($key, $this->columnNames))
+		    	 	 	 if(property_exists($this, $key))
 		    	 	 	 {
 		    	 	 	 	  $this->{$key} = sanitize($val);
 		    	 	 	 }
@@ -316,7 +266,7 @@ class Model
 		    	 	 return true;
 		    	 }
 
-		    	 false;
+		    	 return false;
 		    }
 
             

@@ -4,11 +4,37 @@
 class Contacts  extends Model
 {
        
-
+       
        /**
-        * For column 'deleted'
-        * @var int
+        * Table properties
+        * 
+        * @var int $id
+        * @var int $user_id
+        * @var string $fname
+        * @var string $lname
+        * @var string $email
+        * @var string $address
+        * @var string $address2
+        * @var string $city
+        * @var string $zip
+        * @var string $home_phone
+        * @var string $cell_phone
+        * @var string $work_phone
+        * @var int $deleted
        */
+       public $id;
+       public $user_id;
+       public $fname;
+       public $lname;
+       public $email;
+       public $address;
+       public $address2;
+       public $city;
+       public $state;
+       public $zip;
+       public $home_phone;
+       public $cell_phone;
+       public $work_phone;
        public $deleted = 0;
 
 

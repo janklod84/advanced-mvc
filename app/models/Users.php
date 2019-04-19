@@ -3,30 +3,53 @@
 
 class Users  extends Model
 {
-     
-     /**
-      * @var 
-     */
-     private $isLoggedIn;
 
-     /**
-      * @var string
-     */
-     private $sessionName;
-     
-     
-     /**
-      * @var string
-     */
-     private $cookieName;
 
+       /**
+        * Table properties
+        * 
+        * @var int $id
+        * @var string $username
+        * @var string $email
+        * @var string $password
+        * @var string $fname
+        * @var string $lname
+        * @var string $acl
+        * @var int $deleted
+       */
+       public $id;
+       public $username;
+       public $email;
+       public $password;
+       public $fname;
+       public $lname;
+       public $acl;
+       public $deleted = 0;
      
-     /**
-      * @var 
-     */
-     public static $currentLoggedInUser = null;
+     
+       /**
+        * @var 
+       */
+       private $isLoggedIn;
 
-     
+       /**
+        * @var string
+       */
+       private $sessionName;
+       
+       
+       /**
+        * @var string
+       */
+       private $cookieName;
+
+       
+       /**
+        * @var 
+       */
+       public static $currentLoggedInUser = null;
+
+
      /**
       * Constructor
       * @param string $user 
@@ -46,14 +69,16 @@ class Users  extends Model
           	   {
           	   	   $u = $this->db->findFirst('users', [
                         'conditions' => 'id = ?', 
-                        'bind' => [$user]
+                        'bind' => [$user],   
+                        'Users'
           	   	   ]);
 
           	   }else{
 
           	   	   $u = $this->db->findFirst('users', [
                         'conditions' => 'username = ?',
-                        'bind' => [$user]
+                        'bind' => [$user],  
+                        'Users'
           	   	   ]);
           	   }
 

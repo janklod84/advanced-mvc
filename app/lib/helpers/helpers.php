@@ -85,3 +85,14 @@ function currentPage()
 
     return $currentPage;
 }
+
+
+/**
+ * Get object properties
+ * @param object $obj 
+ * @return mixed
+*/
+function getObjectProperties($obj)
+{
+    return get_object_vars($obj);
+}

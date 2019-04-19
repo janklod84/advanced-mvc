@@ -5,13 +5,27 @@ class UserSessions  extends Model
 {
       
       /**
+        * Table properties
+        * 
+        * @var int $id
+        * @var int $user_id
+        * @var string $session
+        * @var string $user_agent
+       */
+       public $id;
+       public $user_id;
+       public $session;
+       public $user_agent;
+     
+
+      /**
        * Constructor
        * @return void
       */
       public function __construct()
       {
-      	   $table = 'user_sessions';
-      	   parent::__construct($table);
+	     $table = 'user_sessions';
+	     parent::__construct($table);
       }
 
       

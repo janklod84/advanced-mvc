@@ -103,9 +103,10 @@ class DB
         * 
         * @param string $sql 
         * @param array $params 
+        * @param mixed $class
         * @return self
         */
-	   public function query($sql, $params = [])
+	   public function query($sql, $params = [], $class = false)
 	   {
              $this->error = false;
              
@@ -128,7 +129,16 @@ class DB
                   // if executed successfully
              	  if($this->query->execute())
              	  {
-             	  	   $this->result  = $this->query->fetchAll(PDO::FETCH_OBJ);
+
+                      if($class)
+                      {
+                         $this->result  = $this->query->fetchAll(PDO::FETCH_CLASS, $class);
+
+                      }else{
+
+                         $this->result  = $this->query->fetchAll(PDO::FETCH_OBJ);
+                      }
+
              	  	   $this->count   = $this->query->rowCount();
              	  	   $this->lastInsertID = $this->pdo->lastInsertId();
 
@@ -147,9 +157,10 @@ class DB
         * Read item from table
         * @param string $table 
         * @param array $params 
+        * @param mixed $class
         * @return bool
         */
-       protected function read($table, $params = [])
+       protected function read($table, $params = [], $class)
        {
 	           $conditionString = '';
 	           $bind = [];
@@ -203,7 +214,7 @@ class DB
 
 	           $sql = sprintf('SELECT * FROM %s%s%s%s', $table, $conditionString, $order, $limit);
 
-	           if($this->query($sql, $bind))
+	           if($this->query($sql, $bind, $class))
 	           {
 	           	   if(!count($this->result))
 	           	   {
@@ -221,11 +232,12 @@ class DB
         * Find item from table
         * @param string $table 
         * @param array $params 
+        * @param mixed $class
         * @return bool
        */
-       public function find($table, $params = [])
+       public function find($table, $params = [], $class = false)
        {
-             if($this->read($table, $params))
+             if($this->read($table, $params, $class))
              {
              	 return $this->results();
              }
@@ -238,11 +250,12 @@ class DB
         * Find first item from table
         * @param string $table 
         * @param array $params 
+        * @param mixed $class
         * @return bool
        */
-       public function findFirst($table, $params = [])
+       public function findFirst($table, $params = [], $class = false)
        {
-             if($this->read($table, $params))
+             if($this->read($table, $params, $class))
              {
              	 return $this->first();
              }
