@@ -183,7 +183,8 @@ class Validate
        */
        public function displayErrors()
        {
-       	   $html = '<ul class="bg-danger">';
+          $hasErrors = !(empty($this->errors)) ? ' has-errors' : '';
+       	   $html = '<ul class="bg-danger'. $hasErrors .'">';
        	   foreach ($this->errors as $error) {
 
        	   	  if(is_array($error))

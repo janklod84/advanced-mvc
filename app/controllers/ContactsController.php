@@ -61,8 +61,42 @@ class ContactsController extends Controller
            $this->view->render('contacts/add');
   	  }
 
-
       
+      /**
+       * Edit action
+       * @param int $id 
+       * @return mixed
+      */
+      public function editAction($id)
+      {
+          $contact = $this->ContactsModel->findByIdAndUserId((int)$id, currentUser()->id);
+
+          if(!$contact)
+          {
+          	  Router::redirect('contacts');
+          }
+
+          $validation = new Validate();
+          
+          if($_POST)
+          {
+          	   $contact->assign($_POST);
+          	   $validation->check($_POST, Contacts::$addValidation);
+
+          	   if($validation->passed())
+          	   {
+          	   	   $contact->save();
+          	   	   Router::redirect('contacts');
+          	   }
+          }
+
+          $this->view->displayErrors = $validation->displayErrors();
+          $this->view->contact = $contact;
+          $this->view->postAction = PROOT . 'contacts/edit/' . $contact->id;
+          $this->view->render('contacts/edit');
+      }
+
+
       /**
        * Details action
        * @param int $id
