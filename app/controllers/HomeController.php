@@ -1,4 +1,8 @@
 <?php 
+namespace App\Controllers;
+
+use Core\Controller;
+use App\Models\Users;
 
 
 class HomeController extends Controller 
@@ -22,6 +26,24 @@ class HomeController extends Controller
       */
   	  public function indexAction()
   	  {
+           $user = Users::currentUser();
+           $user->fname = "Test";
+           $user->save();
            $this->view->render('home/index');
   	  }
+
+      
+      /**
+       * Test Ajax Request
+       * @return mixed
+      */
+      public function testAjaxAction()
+      {
+           $response = [
+            'success' => true,
+            'data' => ['id' => 23, 'name' => 'Michelle', 'favorite_food' => 'bread']
+          ];
+
+          $this->jsonResponse($response);
+      }
 }

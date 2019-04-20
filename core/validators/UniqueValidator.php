@@ -1,6 +1,11 @@
 <?php 
+namespace Core\Validators;
 
+use Core\Validators\CustomValidator;
 
+/**
+ * @package Core\Validators\UniqueValidator
+*/
 class UniqueValidator  extends CustomValidator
 {
        

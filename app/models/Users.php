@@ -1,11 +1,25 @@
 <?php 
+namespace App\Models;
+
+use Core\Model;
+use App\Models\Users;
+use App\Models\UserSession;
+use Core\Cookie;
+use Core\Session;
+use Core\Validators\MinValidator;
+use Core\Validators\MaxValidator;
+use Core\Validators\RequiredValidator;
+use Core\Validators\EmailValidator;
+use Core\Validators\MatchesValidator;
+use Core\Validators\UniqueValidator;
+
 
 
 class Users  extends Model
 {
 
        
-        /**
+      /**
         * @var 
        */
        private $isLoggedIn;
@@ -79,7 +93,7 @@ class Users  extends Model
           	   	   $u = $this->db->findFirst('users', [
                         'conditions' => 'id = ?', 
                         'bind' => [$user],   
-                        'Users'
+                        'App\\Models\\Users'
           	   	   ]);
 
           	   }else{
@@ -87,7 +101,7 @@ class Users  extends Model
           	   	   $u = $this->db->findFirst('users', [
                         'conditions' => 'username = ?',
                         'bind' => [$user],  
-                        'Users'
+                        'App\\Models\\Users'
           	   	   ]);
           	   }
 
@@ -167,11 +181,14 @@ class Users  extends Model
               'msg' => 'Password must be a minimum 6 characters.'
          ]));
 
-         $this->runValidation(new MatchesValidator($this, [
-              'field' => 'password', 
-              'rule' => $this->confirm, 
-              'msg' => 'Your passwords do not match.'
-         ]));
+         if($this->isNew())
+         {
+             $this->runValidation(new MatchesValidator($this, [
+                  'field' => 'password', 
+                  'rule' => $this->confirm, 
+                  'msg' => 'Your passwords do not match.'
+            ]));
+         }
      } 
 
      
@@ -181,7 +198,10 @@ class Users  extends Model
      */
      public function beforeSave()
      {
-         $this->password = password_hash($this->password, PASSWORD_DEFAULT);
+         if($this->isNew())
+         {
+             $this->password = password_hash($this->password, PASSWORD_DEFAULT);
+         }
      }
      
      /**
@@ -247,17 +267,18 @@ class Users  extends Model
       {
            $userSession = UserSessions::getFromCookie();
 
-           if($userSession->user_id != '')
+           if($userSession && $userSession->user_id != '')
            {
-               $user= new self((int) $userSession->user_id);
+                 $user= new self((int) $userSession->user_id);
+
+                 if($user)
+                 {
+                     $user->login();
+                 }
+                 return $user;
            }
 
-           if($user)
-           {
-             $user->login();
-           }
-
-           return $user;
+           return;
       }
 
 

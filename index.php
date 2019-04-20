@@ -1,4 +1,9 @@
 <?php 
+use Core\Session;
+use Core\Cookie;
+use Core\Router;
+use App\Models\Users;
+
 
 /*
  | ------------------------------------------------------------

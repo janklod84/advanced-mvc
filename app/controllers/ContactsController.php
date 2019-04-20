@@ -1,4 +1,12 @@
 <?php 
+namespace App\Controllers;
+
+use Core\Controller;
+use Core\Session;
+use Core\Router;
+use App\Models\Contacts;
+use App\Models\Users;
+
 
 
 class ContactsController extends Controller
@@ -24,6 +32,7 @@ class ContactsController extends Controller
       */
   	  public function indexAction()
   	  {
+
   	  	   $contacts = $this->ContactsModel->findAllByUserId(Users::currentUser()->id, [
                'order' => 'lname, fname'
   	  	   ]);
@@ -40,22 +49,21 @@ class ContactsController extends Controller
   	  public function addAction()
   	  {
   	  	   $contact = new Contacts();
-           $validation = new Validate();
-  	  	   if($_POST)
-  	  	   {
-               $contact->assign($_POST);
-               $validation->check($_POST, Contacts::$addValidation, true);
 
-               if($validation->passed())
-               {
+  	  	   if($this->request->isPost())
+  	  	   {
+                   $this->request->csrfCheck();
+                   $contact->assign($this->request->get()); 
                	   $contact->user_id = Users::currentUser()->id;
-                   $contact->save();
-                   Router::redirect('contacts');
-               }
+                   
+                   if($contact->save())
+                   {
+                       Router::redirect('contacts');
+                   }
   	  	   }
 
   	  	   $this->view->contact = $contact;
-  	  	   $this->view->displayErrors = $validation->displayErrors();
+  	  	   $this->view->displayErrors = $contact->getErrorMessages();
   	  	   $this->view->postAction = PROOT . 'contacts/add';
            $this->view->render('contacts/add');
   	  }
@@ -75,21 +83,18 @@ class ContactsController extends Controller
           	  Router::redirect('contacts');
           }
 
-          $validation = new Validate();
-          
-          if($_POST)
+          if($this->request->isPost())
           {
-          	   $contact->assign($_POST);
-          	   $validation->check($_POST, Contacts::$addValidation, true);
-
-          	   if($validation->passed())
-          	   {
-          	   	   $contact->save();
-          	   	   Router::redirect('contacts');
-          	   }
+               $this->request->csrfCheck();
+          	   $contact->assign($this->request->get());
+          	   
+               if($contact->save())
+               {
+                     Router::redirect('contacts');
+               }
           }
 
-          $this->view->displayErrors = $validation->displayErrors();
+          $this->view->displayErrors = $contact->getErrorMessages();
           $this->view->contact = $contact;
           $this->view->postAction = PROOT . 'contacts/edit/' . $contact->id;
           $this->view->render('contacts/edit');
@@ -126,6 +131,7 @@ class ContactsController extends Controller
           if($contact)
           {
           	  $contact->delete();
+              Session::addMsg('success', 'Contact has been deleted.');
           }
           Router::redirect('contacts');
   	  }

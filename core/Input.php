@@ -1,9 +1,15 @@
 <?php 
+namespace Core;
+
+
+use Core\FH;
+use Core\Router;
+
 
 
 /**
  * This class it's like class Request
- * @package Input
+ * @package Core\Input
 */
 class Input 
 {

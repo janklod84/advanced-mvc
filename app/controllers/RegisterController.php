@@ -1,4 +1,12 @@
 <?php 
+namespace App\Controllers;
+
+use Core\Controller;
+use Core\Router;
+use App\Models\Users;
+use App\Models\Login;
+
+
 
 
 // http://mvc.loc/register/[login]

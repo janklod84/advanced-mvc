@@ -1,6 +1,10 @@
 <?php 
+namespace Core;
 
 
+/**
+ * @package Core\View
+*/
 class View 
 {
      

@@ -1,10 +1,11 @@
 <?php 
+namespace Core;
 
 
 
 /**
  * Helper
- * @package H
+ * @package Core\H
 */
 class H 
 {

@@ -1,7 +1,9 @@
+<?php 
+use Core\FH;
+?>
 <form class="form" action="<?= $this->postAction ?>" method="POST">
 	 
-	 <div class="form-errors"><?= $this->displayErrors ?></div>
-
+	 <?= FH::displayErrors($this->displayErrors); ?>
 	 <?= FH::csrfInput(); ?>
 	 
 	 <?= FH::inputBlock('text', 'First Name', 'fname', $this->contact->fname, [

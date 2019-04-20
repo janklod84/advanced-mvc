@@ -1,6 +1,11 @@
 <?php 
+namespace Core;
 
 
+
+/**
+ * @package Core\Application
+*/
 class Application 
 {
       

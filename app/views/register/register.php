@@ -1,3 +1,6 @@
+<?php 
+use Core\FH;
+?>
 <?php $this->start('head'); ?>
   <!-- put something here -->
 <?php $this->end(); ?>

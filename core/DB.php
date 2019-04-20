@@ -1,6 +1,14 @@
 <?php 
+namespace Core;
 
 
+use \PDO;
+use \PDOException;
+
+
+/**
+ * @package Core\DB
+*/
 class DB 
 {
        
@@ -29,7 +37,7 @@ class DB
 	    /**
         * @var bool
        */
-	     private $error;
+	     private $error = false;
 
 
 	    /**
@@ -39,14 +47,14 @@ class DB
 
 
   	   /**
-          * @var int
-         */
+         * @var int
+       */
   	   private $count = 0;
 
 
   	   /**
-          * @var int 
-         */
+         * @var int 
+       */
   	   private $lastInsertID = null;
 
        
@@ -54,30 +62,30 @@ class DB
         * Constructor
         * @return void
        */
-	   private function __construct()
-	   {
-            try 
-            {
-                 $this->pdo = new PDO($this->dsn(), DB_USER, DB_PASSWORD);
-                 $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                 $this->pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+  	   private function __construct()
+  	   {
+              try 
+              {
+                   $this->pdo = new PDO($this->dsn(), DB_USER, DB_PASSWORD);
+                   $this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                   $this->pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
 
 
-            }catch(PDOException $e) {
-                
-                 die($e->getMessage());
-            }
-	   }
+              }catch(PDOException $e) {
+                  
+                   die($e->getMessage());
+              }
+  	   }
 
        
        /**
         * return dsn
         * @return string
        */
-	   private function dsn()
-	   {
-           return sprintf(self::DSN_FORMAT, DB_HOST, DB_NAME);
-	   }
+  	   private function dsn()
+  	   {
+             return sprintf(self::DSN_FORMAT, DB_HOST, DB_NAME);
+  	   }
 
        
        /**
@@ -85,15 +93,15 @@ class DB
         * Used pattern singleton
         * @return self
        */
-	   public static function getInstance()
-	   {
-            if(!isset(self::$instance))
-            {
-            	self::$instance = new DB();
-            }
+  	   public static function getInstance()
+  	   {
+              if(!isset(self::$instance))
+              {
+              	self::$instance = new self();
+              }
 
-            return self::$instance;
-	   }
+              return self::$instance;
+  	   }
 
 
        
@@ -106,52 +114,52 @@ class DB
         * @param mixed $class
         * @return self
         */
-	   public function query($sql, $params = [], $class = false)
-	   {
-             $this->error = false;
-             
-             // if query executed successfully
-             if($this->query = $this->pdo->prepare($sql))
-             {
-             	  $x = 1;
+  	   public function query($sql, $params = [], $class = false)
+  	   {
+               $this->error = false;
+               
+               // if query executed successfully
+               if($this->query = $this->pdo->prepare($sql))
+               {
+               	  $x = 1;
 
-             	  // if have params
-             	  if(count($params))
-             	  {
-             	  	  foreach($params as $param)
-             	  	  {   
-             	  	  	   // bindValue(1, 'param 1'); bindValue(2, 'param 2')
-             	  	  	   $this->query->bindValue($x, $param);
-             	  	  	   $x++;
-             	  	  }
-             	  }
+               	  // if have params
+               	  if(count($params))
+               	  {
+               	  	  foreach($params as $param)
+               	  	  {   
+               	  	  	   // bindValue(1, 'param 1'); bindValue(2, 'param 2')
+               	  	  	   $this->query->bindValue($x, $param);
+               	  	  	   $x++;
+               	  	  }
+               	  }
 
-                  // if executed successfully
-             	  if($this->query->execute())
-             	  {
+                    // if executed successfully
+               	  if($this->query->execute())
+               	  {
 
-                      if($class)
-                      {
-                         $this->result  = $this->query->fetchAll(PDO::FETCH_CLASS, $class);
+                        if($class)
+                        {
+                           $this->result  = $this->query->fetchAll(PDO::FETCH_CLASS, $class);
 
-                      }else{
+                        }else{
 
-                         $this->result  = $this->query->fetchAll(PDO::FETCH_OBJ);
-                      }
+                           $this->result  = $this->query->fetchAll(PDO::FETCH_OBJ);
+                        }
 
-             	  	   $this->count   = $this->query->rowCount();
-             	  	   $this->lastInsertID = $this->pdo->lastInsertId();
+               	  	   $this->count   = $this->query->rowCount();
+               	  	   $this->lastInsertID = $this->pdo->lastInsertId();
 
-             	  }else{
+               	  }else{
 
-             	  	  $this->error = true;
-             	  }
-             }
+               	  	  $this->error = true;
+               	  }
+               }
 
-             return $this;
+               return $this;
 
-	   }// end query method
-       
+  	   }// end query method
+         
        
        /**
         * Read item from table

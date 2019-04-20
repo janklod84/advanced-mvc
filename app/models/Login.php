@@ -1,4 +1,9 @@
 <?php 
+namespace App\Models;
+
+use Core\Model;
+use Core\Validators\RequiredValidator;
+
 
 
 class Login extends Model
@@ -49,7 +54,7 @@ class Login extends Model
       */
       public function getRememberMeChecked()
       {
-      	   return $this->remember_me == 'on';
+      	return $this->remember_me == 'on';
       }
 
 }

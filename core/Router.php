@@ -1,7 +1,14 @@
 <?php 
+namespace Core;
 
 
+use Core\Session;
+use App\Models\Users;
 
+
+/**
+ * @package Core\Router
+*/
 class Router 
 {
 
@@ -42,9 +49,10 @@ class Router
 
              // params
              $queryParams = $url; // ['0' => '567', '1' => 'new']
-
-
+ 
+             
              // dispatching [$dispatch = new Users($controller_name, $action)]
+             $controller = 'App\\Controllers\\' . $controller;
              $dispatch = new $controller($controller_name, $action);
              
              // check if method $action exist in class $controller
@@ -211,7 +219,6 @@ class Router
 
                }else{
    
-                    // $uArray = explode(DS, $val);
                     $uArray = explode('/', $val);
                     
                     $controller_name = ucwords($uArray[0]);

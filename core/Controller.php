@@ -1,6 +1,12 @@
 <?php 
+namespace Core;
+
+use Core\Application;
 
 
+/**
+ * @package Core\Controller
+*/
 class Controller extends Application
 {
 
@@ -52,9 +58,26 @@ class Controller extends Application
          */
         protected function loadModel($model)
         {
-             if(class_exists($model))
+             $modelPath = 'App\\Models\\' . $model;
+
+             if(class_exists($modelPath))
              {
-                  $this->{$model.'Model'} = new $model(strtolower($model));
+                  $this->{$model.'Model'} = new $modelPath();
              }
+        }
+
+        
+        /**
+         * Return json data
+         * @param array $response
+         * @return string
+        */
+        public function jsonResponse($response)
+        {
+              header("Access-Control-Allow-Origin: *");
+              header("Content-Type: application/json; charset=UTF-8");
+              http_response_code(200);
+              echo json_encode($response);
+              exit();
         }
 }

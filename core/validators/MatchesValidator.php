@@ -1,6 +1,13 @@
 <?php 
+namespace Core\Validators;
+
+use Core\Validators\CustomValidator;
 
 
+
+/**
+ * @package Core\Validators\MatchesValidator
+*/
 class MatchesValidator  extends CustomValidator
 {
        

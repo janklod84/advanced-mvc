@@ -1,6 +1,14 @@
 <?php 
+namespace Core\Validators;
 
 
+use Core\Validators\CustomValidator;
+
+
+
+/**
+ * @package Core\Validators\RequiredValidator
+*/
 class RequiredValidator  extends CustomValidator
 {
        

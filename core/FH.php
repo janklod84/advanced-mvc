@@ -1,9 +1,13 @@
 <?php 
+namespace Core;
+
+
+use Core\Session;
 
 
 /**
  * FH (Form Helpers)
- * @package FH
+ * @package Core\FH
 */
 class FH 
 {

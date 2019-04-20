@@ -1,6 +1,10 @@
 <?php 
-  $menu = Router::getMenu('menu_acl'); /* debug($menu, true); */
-  $currentPage = H::currentPage();
+use Core\Router;
+use Core\H;
+use App\Models\Users;
+
+$menu = Router::getMenu('menu_acl'); /* debug($menu, true); */
+$currentPage = H::currentPage();
 ?>
 <nav class="navbar navbar-default">
   <div class="container-fluid">

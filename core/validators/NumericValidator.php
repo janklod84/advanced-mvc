@@ -1,5 +1,12 @@
 <?php 
+namespace Core\Validators;
 
+use Core\Validators\CustomValidator;
+
+
+/**
+ * @package Core\Validators\NumericValidator
+*/
 
 class NumericValidator  extends CustomValidator
 {

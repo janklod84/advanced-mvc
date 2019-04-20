@@ -1,6 +1,13 @@
 <?php 
+namespace Core;
 
 
+use \stdClass;
+
+
+/**
+ * @package Core\Model
+*/
 class Model 
 {
         
@@ -395,4 +402,16 @@ class Model
              * @return void
             */
             public function afterSave(){}
+
+
+            
+            /**
+             * Determine if has property $id
+             * and if is set
+             * @return bool
+            */
+            public function isNew()
+            {
+                return (property_exists($this, 'id') && !empty($this->id)) ? false : true;
+            }
 }

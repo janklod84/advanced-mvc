@@ -1,5 +1,13 @@
 <?php 
+namespace Core\Validators;
 
+
+use Core\Validators\CustomValidator;
+
+
+/**
+ * @package Core\Validators\MinValidator
+*/
 
 class MinValidator  extends CustomValidator
 {

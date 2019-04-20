@@ -1,4 +1,9 @@
 <?php 
+namespace App\Models;
+
+use Core\Model;
+use Core\Validators\RequiredValidator;
+use Core\Validators\MaxValidator;
 
 
 class Contacts  extends Model
@@ -54,19 +59,35 @@ class Contacts  extends Model
        	     $this->softDelete = true; 
        }
 
+       
+       /**
+        * Validator data
+        * @return void
+       */
+       public function validator()
+       {
+           $this->runValidation(new RequiredValidator($this, [
+               'field' => 'fname',   
+               'msg' => 'First Name is required.'
+           ]));
 
-       public static $addValidation = [
-             'fname' => [
-                'display'  => 'First Name',
-                'required' => true,
-                'max' => 155
-             ],
-             'lname' => [
-                'display'  => 'Last Name',
-                'required' => true,
-                'max' => 155
-             ]
-       ];
+           $this->runValidation(new MaxValidator($this, [
+               'field' => 'fname',   
+               'msg' => 'First Name must be less than 150 characters.',  
+               'rule' => 155
+           ]));
+           
+           $this->runValidation(new RequiredValidator($this, [
+               'field' => 'lname',   
+               'msg' => 'Last Name is required.'
+           ]));
+
+           $this->runValidation(new MaxValidator($this, [
+               'field' => 'lname',   
+               'msg' => 'Last Name must be less than 150 characters.',  
+               'rule' => 155
+           ]));
+       }
 
 
        

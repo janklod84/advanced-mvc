@@ -1,6 +1,13 @@
 <?php 
+namespace Core\Validators;
 
 
+use \Exception;
+
+
+/**
+ * @package Core\Validators\CustomValidator
+*/
 abstract class CustomValidator 
 {
        
