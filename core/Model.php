@@ -164,17 +164,34 @@ class Model
                 // if validation passed, we will run next scripts
                 if($this->validates)
                 {
+                    
+                    // run before save
+                    $this->beforeSave();
+
                     // Get fields current Model
                     $fields = H::getObjectProperties($this);
 
                     // determine whether to update or insert 
                     if(property_exists($this, 'id') && $this->id != '')
                     {
-                         return $this->update($this->id, $fields);
+                        
+                          $save = $this->update($this->id, $fields);
+
+                          // run after save
+                          $this->afterSave();
+
+                          return $save;
 
                     }else{
+                        
+                         /* H::debug($fields, true); */
 
-                        return $this->insert($fields);
+                         $save = $this->insert($fields);
+
+                         // run after save
+                         $this->afterSave();
+
+                         return $save;
                     }
                 }
                 
@@ -283,7 +300,7 @@ class Model
 		    	 	 {
 		    	 	 	 if(property_exists($this, $key))
 		    	 	 	 {
-		    	 	 	 	  $this->{$key} = FH::sanitize($val);
+		    	 	 	 	  $this->{$key} = $val;
 		    	 	 	 }
 		    	 	 }
 
@@ -318,7 +335,7 @@ class Model
             
             /**
              * Run validator
-             * @param Validator $validator 
+             * @param object $validator 
              * @return void
             */
             public function runValidation($validator)
@@ -347,7 +364,7 @@ class Model
              * Get all passed validation
              * @return bool
             */
-            public function validationPasses()
+            public function validationPassed()
             {
                 return $this->validates;
             }
@@ -364,4 +381,18 @@ class Model
                   $this->validates = false;
                   $this->validationErrors[$field] = $msg;
             }
+
+
+            /**
+             * Do something Before Saving data
+             * @return void
+            */
+            public function beforeSave(){}
+
+
+            /**
+             * Do something After Saving data
+             * @return void
+            */
+            public function afterSave(){}
 }

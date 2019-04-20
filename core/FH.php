@@ -71,6 +71,30 @@ class FH
 			return $html;
 		}
 
+        /**
+         * Generate input checkbox
+         * @param string $label 
+         * @param string $name 
+         * @param bool $checked
+         * @param array $inputAttrs
+         * @param array $divAttrs
+         * @return string
+        */
+        public static function checkboxBlock($label, $name, $checked = false, $inputAttrs = [], $divAttrs = [])
+        {
+              $divString   = self::stringifyAttrs($divAttrs);
+			  $inputString = self::stringifyAttrs($inputAttrs);
+			  $checkString = ($checked) ? ' checked="checked"' : '';
+			  $html = '<div'. $divString.'>';
+			  $html .= sprintf('<label for="%s">%s <input type="checkbox" id="%s" name="%s" value="on"%s></label>', $name, $label, $name, $name, $checkString.$inputString);
+			  /* 
+			    $html .= '<label for="'.$name.'">'. $label .' <input type="checkbox" id="'.$name.'" name="'. $name .'" value="on"'. $checkString . $inputString'></label>';
+			  */
+			  $html .= '</div>';
+			  return $html;
+        }
+
+
 
 		/**
 		 * StringiFy Attributes

@@ -41,7 +41,7 @@
                'class' => 'form-group'
             ]); 
          ?>
-         <?= FH::inputBlock('password', 'Confirm Password', 'confirm', $this->newUser->password, [
+         <?= FH::inputBlock('password', 'Confirm Password', 'confirm', $this->newUser->getConfirm(), [
                'class' => 'form-control input-sm'
             ], [
                'class' => 'form-group'

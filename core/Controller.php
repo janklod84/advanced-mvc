@@ -20,8 +20,15 @@ class Controller extends Application
          * @var string
         */
         public $view; // do may protected
-
+ 
         
+        /**
+          * @var object
+        */       
+        public $request;
+
+
+
         /**
          * Constructor
          * @param string $controller 
@@ -32,7 +39,8 @@ class Controller extends Application
         {
               parent::__construct(); // Application constructor
               $this->controller = $controller;
-              $this->action = $action;
+              $this->action  = $action;
+              $this->request = new Input();
               $this->view = new View();
         }
 

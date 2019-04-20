@@ -24,4 +24,14 @@ class RestrictedController extends Controller
   	  {
            $this->view->render('restricted/index');
   	  }
+
+      
+      /**
+       * Bad Token Action
+       * @return void
+      */
+      public function badTokenAction()
+      {
+           $this->view->render('restricted/badToken');
+      }
 }
