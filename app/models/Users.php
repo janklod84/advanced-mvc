@@ -39,7 +39,7 @@ class Users  extends Model
        /**
         * @var string
        */
-       public $confirm; 
+       private $_confirm; 
 
        
        /**
@@ -185,7 +185,7 @@ class Users  extends Model
          {
              $this->runValidation(new MatchesValidator($this, [
                   'field' => 'password', 
-                  'rule' => $this->confirm, 
+                  'rule' => $this->_confirm, 
                   'msg' => 'Your passwords do not match.'
             ]));
          }
@@ -330,7 +330,7 @@ class Users  extends Model
      */
      public function setConfirm($value)
      {
-          $this->confirm = $value;
+          $this->_confirm = $value;
      }
 
      
@@ -340,7 +340,7 @@ class Users  extends Model
      */
      public function getConfirm()
      {
-         return $this->confirm;
+         return $this->_confirm;
      }
 
 
