@@ -1,6 +1,6 @@
 <?php $this->start('body'); ?>
 <h1 class="text-center red">Welcome to JanKlod MVC Framework</h1>
-<div onclick="ajaxTest();">Click me!!!</div>
+<div onclick="ajaxTest();" class="btn btn-success">Click me!!!</div>
 
 <script>
 	function ajaxTest()
